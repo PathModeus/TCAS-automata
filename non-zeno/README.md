@@ -1,19 +1,4 @@
-<p align="center">
-  <a href="https://example.com/">
-    <img src="https://via.placeholder.com/72" alt="Logo" width=72 height=72>
-  </a>
-
-  <h3 align="center">Logo</h3>
-
-  <p align="center">
-    Short description
-    <br>
-    <a href="https://reponame/issues/new?template=bug.md">Report bug</a>
-    ·
-    <a href="https://reponame/issues/new?template=feature.md&labels=feature">Request feature</a>
-  </p>
-</p>
-
+This programm is part of a one week project in CentraleSupélec. The objective of this program is to check the strongly non-zenoness of a coded XML graph.
 
 ## Table of contents
 
@@ -27,7 +12,7 @@
 
 ## Quick start
 
-Some text
+To run our code:
 
 - Finish the function loops so that it can generate all the control loops in the graph.
 - Modify the path of your XML file in main.py
