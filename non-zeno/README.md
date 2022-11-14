@@ -6,7 +6,6 @@ This programm is part of a one week project in CentraleSupélec. The objective o
 - [Status](#status)
 - [What's included](#whats-included)
 - [Bugs and feature requests](#bugs-and-feature-requests)
-- [Contributing](#contributing)
 - [Creators](#creators)
 
 
@@ -37,9 +36,21 @@ Non-Zeno/
 
 ## Creators
 
+**Mélanie Augier**
+
+- melanie.augier@student-cs.fr
+
+**Tom Bray**
+
+- tom.bray@student-cs.fr
+
 **Elisa Faure**
 
 - elisa.faure@student-cs.fr
+
+**Marc-Antoine Godde**
+
+- marc-antoine.godde@student-cs.fr
 
 **Juliette Kalflèche**
 
@@ -49,6 +60,6 @@ Non-Zeno/
 
 - florentin.labelle@student-cs.fr
 
-**Tom Bray**
+**Maud Valentin**
 
-- tom.bray@student-cs.fr
+- maud.valentin@student-cs.fr
