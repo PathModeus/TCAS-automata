@@ -3,6 +3,7 @@ Here is the result of our one week project on the functioning of TCAS algorithms
 ## Table of contents
 
 - [Status](#status)
+- [Prerequisites](#prerequisites)
 - [What's included](#whats-included)
 - [Creators](#creators)
 
@@ -10,23 +11,29 @@ Here is the result of our one week project on the functioning of TCAS algorithms
 
 The project is currently completed.
 
+## Prerequisites
+
+Reading and executing xml files requires the installation of UPPAAL 4.1: https://uppaal.org/
+The algorithmic part is realized on python 3.10
+
 ## What's included
 
 Here is the structure of our project.
 
-```text
+```
 EI-ST5/
-├── README
+├── README.md
+├── Rapport_EI_ST5.pdf
+├── demo_uppaal.mp4
 ├── non-zeno/
-│   ├── README
-│   ├── loops
-│   ├── main
-│   ├── parser
-│   └── strgnonzeno
+│   ├── README.md
+│   ├── loops.py
+│   ├── main.py
+│   ├── parser.py
+│   └── strgnonzeno.py
 └── UPPAAL-automata/
-    ├── modele_final
-    ├── modele_simplifie
-    └── premiere_modelisation
+    ├── group1-modele-simple
+    └── group1-modele-complique
 ```
 
 ## Creators

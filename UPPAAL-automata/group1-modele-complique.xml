@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+
+const int N = 2;
+typedef int[0,N-1] id_a;
+
+
+chan solution[N], emission[N], danger[N],  safe[N];
+urgent chan infoVoisin[N];
+broadcast chan info[N], conseil[N];
+urgent chan manoeuvre[N];</declaration>
+	<template>
+		<name x="5" y="5">Aircraft</name>
+		<parameter>const id_a id</parameter>
+		<declaration>clock t;</declaration>
+		<location id="id0" x="-263" y="-102">
+			<name x="-280" y="-85">Safe</name>
+		</location>
+		<location id="id1" x="153" y="-102">
+			<name x="128" y="-85">Danger</name>
+		</location>
+		<init ref="id0"/>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id1"/>
+			<label kind="synchronisation" x="-93" y="-187">info[id]!</label>
+			<nail x="-67" y="-162"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id1"/>
+			<label kind="guard" x="281" y="-153">t &gt; 2</label>
+			<label kind="synchronisation" x="281" y="-128">info[id]!</label>
+			<label kind="assignment" x="289" y="-102">t := 0</label>
+			<nail x="272" y="-35"/>
+			<nail x="264" y="-187"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id0"/>
+			<label kind="synchronisation" x="-110" y="-43">manoeuvre[id]?</label>
+			<nail x="-67" y="-43"/>
+		</transition>
+	</template>
+	<template>
+		<name>Sensor</name>
+		<parameter>const id_a id</parameter>
+		<location id="id2" x="-110" y="-17">
+			<name x="-84" y="-8">Retransmission</name>
+		</location>
+		<location id="id3" x="-399" y="0">
+			<name x="-459" y="-26">Wait</name>
+		</location>
+		<init ref="id3"/>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id3"/>
+			<label kind="synchronisation" x="-297" y="-187">emission[id]!</label>
+			<nail x="-110" y="-161"/>
+			<nail x="-399" y="-161"/>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id2"/>
+			<label kind="synchronisation" x="-272" y="42">info[1-id]?</label>
+			<nail x="-280" y="25"/>
+			<nail x="-204" y="25"/>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id2"/>
+			<label kind="synchronisation" x="-272" y="-85">info[id]?</label>
+			<nail x="-323" y="-59"/>
+			<nail x="-204" y="-59"/>
+		</transition>
+	</template>
+	<template>
+		<name>ConflictDetection</name>
+		<parameter>const id_a id</parameter>
+		<location id="id4" x="-374" y="-153">
+			<name x="-383" y="-136">Off</name>
+		</location>
+		<location id="id5" x="34" y="-161">
+			<name x="24" y="-195">On</name>
+			<urgent/>
+		</location>
+		<init ref="id4"/>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id4"/>
+			<label kind="synchronisation" x="-187" y="-238">danger[id]!</label>
+			<nail x="-153" y="-212"/>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id5"/>
+			<label kind="synchronisation" x="-187" y="-102">emission[id]?</label>
+			<nail x="-153" y="-110"/>
+		</transition>
+	</template>
+	<template>
+		<name>ConflictResolution</name>
+		<parameter>const id_a id</parameter>
+		<declaration>clock c;
+clock t;
+
+
+</declaration>
+		<location id="id6" x="17" y="-340">
+			<name x="-33" y="-374">Calcul</name>
+			<label kind="invariant" x="17" y="-374">c &lt;=5 and t &lt;= 30</label>
+		</location>
+		<location id="id7" x="-272" y="85">
+			<name x="-280" y="102">Resolu</name>
+		</location>
+		<location id="id8" x="25" y="25">
+			<name x="-26" y="-9">Comparaison</name>
+			<urgent/>
+		</location>
+		<location id="id9" x="365" y="68">
+			<name x="355" y="34">Wait</name>
+			<urgent/>
+		</location>
+		<location id="id10" x="-493" y="85">
+			<name x="-535" y="93">Off</name>
+		</location>
+		<init ref="id10"/>
+		<transition>
+			<source ref="id9"/>
+			<target ref="id7"/>
+			<label kind="guard" x="51" y="161">t &gt;= 30</label>
+			<label kind="synchronisation" x="-42" y="153">conseil[id]!</label>
+			<nail x="280" y="178"/>
+			<nail x="-221" y="178"/>
+		</transition>
+		<transition>
+			<source ref="id10"/>
+			<target ref="id6"/>
+			<label kind="synchronisation" x="-425" y="-272">infoVoisin[id]?</label>
+			<label kind="assignment" x="-416" y="-246">t:=0, c:=0</label>
+			<nail x="-340" y="-255"/>
+		</transition>
+		<transition>
+			<source ref="id7"/>
+			<target ref="id10"/>
+			<label kind="synchronisation" x="-408" y="93">solution[id]!</label>
+		</transition>
+		<transition>
+			<source ref="id10"/>
+			<target ref="id6"/>
+			<label kind="synchronisation" x="-212" y="-153">danger[id]?</label>
+			<label kind="assignment" x="-229" y="-136">t:=0, c:=0</label>
+			<nail x="-221" y="-153"/>
+		</transition>
+		<transition>
+			<source ref="id8"/>
+			<target ref="id7"/>
+			<label kind="select" x="-161" y="17">x:int[0,10]</label>
+			<label kind="guard" x="-161" y="34">x &lt; 8</label>
+			<label kind="synchronisation" x="-161" y="68">conseil[id]!</label>
+		</transition>
+		<transition>
+			<source ref="id6"/>
+			<target ref="id9"/>
+			<label kind="synchronisation" x="212" y="-153">solution[id]!</label>
+		</transition>
+		<transition>
+			<source ref="id9"/>
+			<target ref="id8"/>
+			<label kind="synchronisation" x="204" y="59">infoVoisin[id]?</label>
+		</transition>
+		<transition>
+			<source ref="id8"/>
+			<target ref="id6"/>
+			<label kind="assignment" x="-34" y="-161">c := 0</label>
+		</transition>
+	</template>
+	<template>
+		<name>Channel</name>
+		<parameter>const id_a id</parameter>
+		<declaration>clock t;</declaration>
+		<location id="id11" x="-289" y="-34">
+			<name x="-332" y="-42">Off</name>
+		</location>
+		<location id="id12" x="68" y="-34">
+			<name x="58" y="-68">Communique</name>
+		</location>
+		<init ref="id11"/>
+		<transition>
+			<source ref="id12"/>
+			<target ref="id11"/>
+			<label kind="synchronisation" x="-170" y="42">infoVoisin[1-id]!</label>
+			<nail x="-119" y="34"/>
+		</transition>
+		<transition>
+			<source ref="id11"/>
+			<target ref="id12"/>
+			<label kind="synchronisation" x="-144" y="-127">solution[id]?</label>
+			<nail x="-110" y="-102"/>
+		</transition>
+	</template>
+	<template>
+		<name>Pilot</name>
+		<parameter>const id_a id</parameter>
+		<declaration>clock t;</declaration>
+		<location id="id13" x="34" y="-42">
+			<name x="59" y="-68">Alerted</name>
+			<label kind="invariant" x="68" y="-51">t &lt;= 5</label>
+		</location>
+		<location id="id14" x="-238" y="-42">
+			<name x="-298" y="-76">Unbothered</name>
+		</location>
+		<init ref="id14"/>
+		<transition>
+			<source ref="id14"/>
+			<target ref="id13"/>
+			<label kind="synchronisation" x="-136" y="-153">conseil[id]?</label>
+			<label kind="assignment" x="-119" y="-136">t := 0</label>
+			<nail x="-102" y="-110"/>
+		</transition>
+		<transition>
+			<source ref="id13"/>
+			<target ref="id14"/>
+			<label kind="synchronisation" x="-153" y="34">manoeuvre[id]!</label>
+			<nail x="-110" y="25"/>
+		</transition>
+	</template>
+	<system>system Pilot, Aircraft, Sensor, ConflictDetection, Channel, ConflictResolution;
+    </system>
+	<queries>
+		<query>
+			<formula>E&lt;&gt; Aircraft(0).Danger imply Aircraft(0).Safe</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; Aircraft(1).Danger imply Aircraft(1).Safe</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula></formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>Aircraft(0).Danger --&gt; Aircraft(0).Safe</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>Aircraft(1).Danger --&gt; Aircraft(1).Safe</formula>
+			<comment></comment>
+		</query>
+	</queries>
+</nta>
